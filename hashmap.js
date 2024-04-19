@@ -141,22 +141,97 @@ function HashMap() {
     });
   }
 
+  function length() {
+    let lengthOfMap = 0;
+    hashMap.forEach((value, index, arr) => {
+      if (arr[index] !== null) {
+        let node = arr[index];
+
+        while (node.nextNode !== null) {
+          lengthOfMap += 1;
+          node = node.nextNode;
+        }
+
+        lengthOfMap += 1;
+      }
+    });
+
+    return lengthOfMap;
+  }
+
+  function keys() {
+    const keysArr = [];
+    hashMap.forEach((value, index, arr) => {
+      if (arr[index] !== null) {
+        let node = arr[index];
+
+        while (node.nextNode !== null) {
+          keysArr.push(node.key);
+          node = node.nextNode;
+        }
+
+        keysArr.push(node.key);
+      }
+    });
+
+    return keysArr;
+  }
+
+  function values() {
+    const valuesArr = [];
+    hashMap.forEach((value, index, arr) => {
+      if (arr[index] !== null) {
+        let node = arr[index];
+
+        while (node.nextNode !== null) {
+          valuesArr.push(node.value);
+          node = node.nextNode;
+        }
+
+        valuesArr.push(node.value);
+      }
+    });
+
+    return valuesArr;
+  }
+
+  function entries() {
+    const entriesArr = [];
+    hashMap.forEach((value, index, arr) => {
+      if (arr[index] !== null) {
+        let node = arr[index];
+
+        while (node.nextNode !== null) {
+          entriesArr.push([node.key, node.value]);
+          node = node.nextNode;
+        }
+
+        entriesArr.push([node.key, node.value]);
+      }
+    });
+
+    return entriesArr;
+  }
+
   return {
     set,
     get,
     has,
     remove,
-    clear
+    clear,
+    length,
+    keys,
+    values,
+    entries,
   };
 }
 
 const hashMap = HashMap();
 hashMap.set('White', 'Shark');
-hashMap.set('Shark', 'White');
+hashMap.set('Razor', 'Keyboard');
+hashMap.set('Bloody', 'Mouse');
 
-console.log(hashMap.get('Shark'));
-console.log(hashMap.get('White'));
-
-hashMap.remove('White');
-console.log(hashMap.get('Shark'));
-console.log(hashMap.get('White'));
+console.log(hashMap.length());
+console.log(hashMap.keys());
+console.log(hashMap.values());
+console.log(hashMap.entries());
