@@ -1,0 +1,6 @@
+.vscode/
+.eslintrc.json
+.gitignore
+.prettierignore
+package-lock.json
+package.json
