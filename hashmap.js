@@ -98,15 +98,65 @@ function HashMap() {
     return false;
   }
 
+  function remove(key) {
+    const hashedKey = hash(key);
+
+    if (hashMap[hashedKey] === null) {
+      return false;
+    }
+
+    if (hashMap[hashedKey].nextNode === null) {
+      if (hashMap[hashedKey].key === key) {
+        hashMap[hashedKey] = null;
+        return true;
+      }
+
+      return false;
+    }
+
+    let curr = hashMap[hashedKey];
+    let prev = null;
+    while (curr.nextNode !== null) {
+      if (curr.key === key) {
+        prev.nextNode = curr.nextNode;
+        return true;
+      }
+
+      prev = curr;
+      curr = curr.nextNode;
+    }
+
+    if (curr.key === key) {
+      prev.nextNode = curr.nextNode;
+      return true;
+    }
+
+    return false;
+  }
+
+  function clear() {
+    hashMap.forEach((value, index, arr) => {
+      // eslint-disable-next-line no-param-reassign
+      arr[index] = null;
+    });
+  }
+
   return {
     set,
     get,
     has,
+    remove,
+    clear
   };
 }
 
 const hashMap = HashMap();
 hashMap.set('White', 'Shark');
+hashMap.set('Shark', 'White');
 
+console.log(hashMap.get('Shark'));
+console.log(hashMap.get('White'));
+
+hashMap.remove('White');
 console.log(hashMap.get('Shark'));
 console.log(hashMap.get('White'));
