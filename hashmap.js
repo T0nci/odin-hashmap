@@ -301,3 +301,5 @@ console.log(
 );
 hashMap.clear();
 console.log(hashMap.mapToString(), `Buckets: ${hashMap.getCapacity()}`);
+
+// optional TODO: build a HashSet which only has keys(prob easy)
