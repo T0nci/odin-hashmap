@@ -9,7 +9,10 @@ function HashMap() {
   let capacity = 16;
   const LOAD_FACTOR = 0.75;
 
-  for (let i = 0; i < capacity; i += 1) hashMap[i] = null;
+  function fillWithNull() {
+    for (let i = 0; i < capacity; i += 1) hashMap[i] = null;
+  }
+  fillWithNull();
 
   function hash(key) {
     let hashCode = 0;
@@ -22,12 +25,69 @@ function HashMap() {
     return hashCode;
   }
 
+  function length() {
+    let lengthOfMap = 0;
+    hashMap.forEach((value, index, arr) => {
+      if (arr[index] !== null) {
+        let node = arr[index];
+
+        while (node.nextNode !== null) {
+          lengthOfMap += 1;
+          node = node.nextNode;
+        }
+
+        lengthOfMap += 1;
+      }
+    });
+
+    return lengthOfMap;
+  }
+
+  function entries() {
+    const entriesArr = [];
+    hashMap.forEach((value, index, arr) => {
+      if (arr[index] !== null) {
+        let node = arr[index];
+
+        while (node.nextNode !== null) {
+          entriesArr.push([node.key, node.value]);
+          node = node.nextNode;
+        }
+
+        entriesArr.push([node.key, node.value]);
+      }
+    });
+
+    return entriesArr;
+  }
+
+  function clear() {
+    hashMap.forEach((value, index, arr) => {
+      // eslint-disable-next-line no-param-reassign
+      arr[index] = null;
+    });
+  }
+
   // TODO: regrow function, add bucket access snippet, add testing, Extra credit
+  function regrow() {
+    const entriesArr = entries();
+
+    clear();
+
+    capacity *= 2;
+
+    fillWithNull();
+
+    entriesArr.forEach((value) => {
+      // eslint-disable-next-line no-use-before-define
+      set(value[0], value[1]);
+    });
+  }
 
   function set(key, value) {
-    // if ((length() + 1) / capacity > LOAD_FACTOR) {
-    //   regrow();
-    // }
+    if ((length() + 1) / capacity >= LOAD_FACTOR) {
+      regrow();
+    }
     
     const hashedKey = hash(key);
     if (hashedKey < 0 || hashedKey >= capacity) {
@@ -148,31 +208,6 @@ function HashMap() {
     return false;
   }
 
-  function clear() {
-    hashMap.forEach((value, index, arr) => {
-      // eslint-disable-next-line no-param-reassign
-      arr[index] = null;
-    });
-  }
-
-  function length() {
-    let lengthOfMap = 0;
-    hashMap.forEach((value, index, arr) => {
-      if (arr[index] !== null) {
-        let node = arr[index];
-
-        while (node.nextNode !== null) {
-          lengthOfMap += 1;
-          node = node.nextNode;
-        }
-
-        lengthOfMap += 1;
-      }
-    });
-
-    return lengthOfMap;
-  }
-
   function keys() {
     const keysArr = [];
     hashMap.forEach((value, index, arr) => {
@@ -209,24 +244,6 @@ function HashMap() {
     return valuesArr;
   }
 
-  function entries() {
-    const entriesArr = [];
-    hashMap.forEach((value, index, arr) => {
-      if (arr[index] !== null) {
-        let node = arr[index];
-
-        while (node.nextNode !== null) {
-          entriesArr.push([node.key, node.value]);
-          node = node.nextNode;
-        }
-
-        entriesArr.push([node.key, node.value]);
-      }
-    });
-
-    return entriesArr;
-  }
-
   return {
     set,
     get,
@@ -237,15 +254,38 @@ function HashMap() {
     keys,
     values,
     entries,
+    getCapacity() {
+      return capacity;
+    }
   };
 }
 
 const hashMap = HashMap();
-hashMap.set('White', 'Shark');
-hashMap.set('Razor', 'Keyboard');
-hashMap.set('Bloody', 'Mouse');
 
-console.log(hashMap.length());
-console.log(hashMap.keys());
-console.log(hashMap.values());
-console.log(hashMap.entries());
+console.log(hashMap.getCapacity());
+hashMap.set('1', 'Shark');
+hashMap.set('2', 'Keyboard');
+hashMap.set('3', 'Mouse');
+hashMap.set('4', 'Mouse');
+hashMap.set('5', 'Mouse');
+hashMap.set('6', 'Mouse');
+hashMap.set('7', 'Mouse');
+hashMap.set('8', 'Mouse');
+hashMap.set('9', 'Mouse');
+hashMap.set('10', 'Mouse');
+hashMap.set('11', 'Mouse');
+hashMap.set('12', 'Mouse');
+console.log(hashMap.getCapacity());
+hashMap.set('13', 'Shark');
+hashMap.set('14', 'Keyboard');
+hashMap.set('15', 'Mouse');
+hashMap.set('16', 'Mouse');
+hashMap.set('17', 'Mouse');
+hashMap.set('18', 'Mouse');
+hashMap.set('19', 'Mouse');
+hashMap.set('20', 'Mouse');
+hashMap.set('21', 'Mouse');
+hashMap.set('22', 'Mouse');
+hashMap.set('23', 'Mouse');
+hashMap.set('24', 'Mouse');
+console.log(hashMap.getCapacity());
