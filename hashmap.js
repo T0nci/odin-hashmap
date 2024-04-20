@@ -9,11 +9,6 @@ function HashMap() {
   let capacity = 16;
   const LOAD_FACTOR = 0.75;
 
-  function fillWithNull() {
-    for (let i = 0; i < capacity; i += 1) hashMap[i] = null;
-  }
-  fillWithNull();
-
   function hash(key) {
     let hashCode = 0;
 
@@ -62,21 +57,18 @@ function HashMap() {
   }
 
   function clear() {
-    hashMap.forEach((value, index, arr) => {
-      // eslint-disable-next-line no-param-reassign
-      arr[index] = null;
-    });
+    for (let i = 0; i < capacity; i += 1) {
+      hashMap[i] = null;
+    }
   }
 
-  // TODO: regrow function, add bucket access snippet, add testing, Extra credit
+  // TODO: add testing, Extra credit
   function regrow() {
     const entriesArr = entries();
 
-    clear();
-
     capacity *= 2;
 
-    fillWithNull();
+    clear();
 
     entriesArr.forEach((value) => {
       // eslint-disable-next-line no-use-before-define
@@ -244,6 +236,7 @@ function HashMap() {
     return valuesArr;
   }
 
+  clear(); // To fill the current buckets with null instead of undefined
   return {
     set,
     get,
@@ -288,4 +281,4 @@ hashMap.set('21', 'Mouse');
 hashMap.set('22', 'Mouse');
 hashMap.set('23', 'Mouse');
 hashMap.set('24', 'Mouse');
-console.log(hashMap.getCapacity());
+console.log(hashMap.getCapacity(), hashMap.keys());
