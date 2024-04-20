@@ -22,12 +22,17 @@ function HashMap() {
     return hashCode;
   }
 
+  // TODO: regrow function, add bucket access snippet, add testing, Extra credit
+
   function set(key, value) {
     // if ((length() + 1) / capacity > LOAD_FACTOR) {
     //   regrow();
     // }
     
     const hashedKey = hash(key);
+    if (hashedKey < 0 || hashedKey >= capacity) {
+      throw new Error("Trying to access index out of bound");
+    }
 
     if (hashMap[hashedKey] === null) {
       hashMap[hashedKey] = Node(key, value);
@@ -54,6 +59,9 @@ function HashMap() {
 
   function get(key) {
     const hashedKey = hash(key);
+    if (hashedKey < 0 || hashedKey >= capacity) {
+      throw new Error("Trying to access index out of bound");
+    }
 
     if (hashMap[hashedKey] === null) {
       return null;
@@ -77,6 +85,9 @@ function HashMap() {
 
   function has(key) {
     const hashedKey = hash(key);
+    if (hashedKey < 0 || hashedKey >= capacity) {
+      throw new Error("Trying to access index out of bound");
+    }
 
     if (hashMap[hashedKey] === null) {
       return false;
@@ -100,6 +111,9 @@ function HashMap() {
 
   function remove(key) {
     const hashedKey = hash(key);
+    if (hashedKey < 0 || hashedKey >= capacity) {
+      throw new Error("Trying to access index out of bound");
+    }
 
     if (hashMap[hashedKey] === null) {
       return false;
