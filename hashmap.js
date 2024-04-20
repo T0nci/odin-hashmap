@@ -62,7 +62,6 @@ function HashMap() {
     }
   }
 
-  // TODO: add testing, Extra credit
   function regrow() {
     const entriesArr = entries();
 
@@ -236,6 +235,26 @@ function HashMap() {
     return valuesArr;
   }
 
+  function mapToString() {
+    let string = '';
+    for (let i = 0; i < capacity; i += 1) {
+      if (hashMap[i] !== null) {
+        string += `${i} -> `;
+
+        let node = hashMap[i];
+        while (node !== null) {
+          string += `(${node.key}, ${node.value}) -> `;
+          node = node.nextNode;
+        }
+
+        string += 'null\n';
+      } else {
+        string += `${i} -> null\n`;
+      }
+    }
+    return string;
+  }
+
   clear(); // To fill the current buckets with null instead of undefined
   return {
     set,
@@ -249,36 +268,36 @@ function HashMap() {
     entries,
     getCapacity() {
       return capacity;
-    }
+    },
+    mapToString,
   };
 }
 
 const hashMap = HashMap();
 
-console.log(hashMap.getCapacity());
-hashMap.set('1', 'Shark');
-hashMap.set('2', 'Keyboard');
-hashMap.set('3', 'Mouse');
-hashMap.set('4', 'Mouse');
-hashMap.set('5', 'Mouse');
-hashMap.set('6', 'Mouse');
-hashMap.set('7', 'Mouse');
-hashMap.set('8', 'Mouse');
-hashMap.set('9', 'Mouse');
-hashMap.set('10', 'Mouse');
-hashMap.set('11', 'Mouse');
-hashMap.set('12', 'Mouse');
-console.log(hashMap.getCapacity());
-hashMap.set('13', 'Shark');
-hashMap.set('14', 'Keyboard');
-hashMap.set('15', 'Mouse');
-hashMap.set('16', 'Mouse');
-hashMap.set('17', 'Mouse');
-hashMap.set('18', 'Mouse');
-hashMap.set('19', 'Mouse');
-hashMap.set('20', 'Mouse');
-hashMap.set('21', 'Mouse');
-hashMap.set('22', 'Mouse');
-hashMap.set('23', 'Mouse');
-hashMap.set('24', 'Mouse');
-console.log(hashMap.getCapacity(), hashMap.keys());
+hashMap.set("1", "1");
+hashMap.set("2", "2");
+hashMap.set("3", "1");
+hashMap.set("4", "2");
+hashMap.set("5", "1");
+hashMap.set("6", "2");
+hashMap.set("7", "1");
+hashMap.set("8", "2");
+hashMap.set("9", "1");
+hashMap.set("10", "2");
+hashMap.set("11", "1");
+
+// Test for remove, has, get
+hashMap.remove("11");
+console.log(hashMap.has("11"));
+hashMap.set("11", "0");
+console.log(hashMap.get("11"));
+console.log(hashMap.mapToString(), `Buckets: ${hashMap.getCapacity()}`);
+
+// Tests for set, keys, values, entries, length, clear, regrowth
+hashMap.set("12", "2");
+console.log(
+  hashMap.keys(), hashMap.values(), hashMap.entries(), hashMap.length()
+);
+hashMap.clear();
+console.log(hashMap.mapToString(), `Buckets: ${hashMap.getCapacity()}`);
